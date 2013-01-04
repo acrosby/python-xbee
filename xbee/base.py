@@ -59,7 +59,6 @@ class XBeeBase(threading.Thread):
         if callback:
             self._callback = callback
             self._thread_continue = True
-            self._thread_quit = threading.Event()
             self.start()
 
     def halt(self):
@@ -72,7 +71,7 @@ class XBeeBase(threading.Thread):
         """
         if self._callback:
             self._thread_continue = False
-            self._thread_quit.wait()
+            self.join()
         
     def _write(self, data):
         """
@@ -96,7 +95,6 @@ class XBeeBase(threading.Thread):
                 self._callback(self.wait_read_frame())
             except ThreadQuitException:
                 break
-        self._thread_quit.set()
     
     def _wait_for_frame(self):
         """
@@ -138,6 +136,12 @@ class XBeeBase(threading.Thread):
                 try:
                     # Try to parse and return result
                     frame.parse()
+                    
+                    # Ignore empty frames
+                    if len(frame.data) == 0:
+                        frame = APIFrame()
+                        continue
+                        
                     return frame
                 except ValueError:
                     # Bad frame, so restart
@@ -357,8 +361,7 @@ class XBeeBase(threading.Thread):
                     tmp_samples['dio-{0}'.format(i)] = True if (digital_values >> i) & 1 else False
                         
             for i in aio_chans:
-                # only first 10 bits are significant
-                analog_sample = (sample_bytes.pop(0) << 8 | sample_bytes.pop(0)) & 0x03FF
+                analog_sample = (sample_bytes.pop(0) << 8 | sample_bytes.pop(0))
                 tmp_samples['adc-{0}'.format(i)] = analog_sample
             
             samples.append(tmp_samples)
