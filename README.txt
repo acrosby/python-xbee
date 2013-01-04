@@ -92,6 +92,7 @@ Contributors
 Paul Malmsten <pmalmsten@gmail.com>
 Greg Rapp <gdrapp@gmail.com>
 Brian <blalor@bravo5.org>
+Christopher Lee <lee@ashimaresearch.com>
 
 Special Thanks
 ==================

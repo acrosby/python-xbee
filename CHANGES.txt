@@ -48,3 +48,5 @@ v2.0.0  12/29/10 -- Added preiminary support for XBee ZB devices; thanks
                       Greg and Brian!
                     Improved & unified sample data header parsing code.
                     Improved documentation.
+
+v2.1.0 01/04/12 -- Added preliminary support for XBee Wifi devices. CL
