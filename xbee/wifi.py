@@ -128,8 +128,7 @@ class XBeeWifi(XBeeBase):
                         "\xB0":
                            {'name':'rx',
                              'structure':
-                               [{'name':'frame_id',         'len':1},
-                                {'name':'source_addr',      'len':4}, 
+                               [{'name':'source_addr',      'len':4}, 
                                 {'name':'dest_port',        'len':2},
                                 {'name':'source_port',      'len':2},
                                 {'name':'protocol',         'len':1},
